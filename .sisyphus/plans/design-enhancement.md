@@ -1857,7 +1857,7 @@ Max Concurrent: 7 (Wave 2)
   - Files: `src/pages/SignupPage.tsx`
   - Pre-commit: `npm run build`
 
-- [ ] 22. Page Transitions Integration (Wrap Routes in Layouts)
+- [x] 22. Page Transitions Integration (Wrap Routes in Layouts)
 
   **What to do**:
   - Modify `FE/src/layouts/DashboardLayout.tsx` to:

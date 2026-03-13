@@ -3,6 +3,7 @@ import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, Search, PieChart, History, Menu, X, LogOut, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Logo } from '@/components/ui/Logo';
+import { PageTransition } from '@/components/ui/PageTransition';
 import { user } from '@/data/mockData';
 
 const navItems = [
@@ -86,7 +87,9 @@ export function DashboardLayout() {
 
         <div className="flex-1 overflow-auto p-4 md:p-8">
           <div className="max-w-7xl mx-auto space-y-6">
-            <Outlet />
+            <PageTransition>
+              <Outlet />
+            </PageTransition>
           </div>
         </div>
       </main>

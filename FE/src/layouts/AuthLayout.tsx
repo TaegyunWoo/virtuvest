@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import { Logo } from '@/components/ui/Logo';
+import { PageTransition } from '@/components/ui/PageTransition';
 
 export function AuthLayout() {
   return (
@@ -9,7 +10,9 @@ export function AuthLayout() {
           <Logo size="lg" />
           <p className="text-[var(--color-text-secondary)] mt-2">안전하고 스마트한 모의 투자</p>
         </div>
-        <Outlet />
+        <PageTransition>
+          <Outlet />
+        </PageTransition>
       </div>
     </div>
   );
