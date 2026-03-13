@@ -1,3 +1,12 @@
+export interface OHLCData {
+  time: string;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  volume: number;
+}
+
 export const user = {
   email: 'investor@virtuvest.kr',
   nickname: '주식왕',
@@ -70,5 +79,49 @@ export const generateChartData = (basePrice: number) => {
     });
   }
   
+  return data;
+};
+
+export const generateOHLCData = (basePrice: number): OHLCData[] => {
+  const data: OHLCData[] = [];
+  let previousClose = basePrice;
+  const now = new Date();
+
+  for (let i = 59; i >= 0; i--) {
+    const date = new Date(now);
+    date.setDate(date.getDate() - i);
+
+    // Format date as YYYY-MM-DD for lightweight-charts
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const timeStr = `${year}-${month}-${day}`;
+
+    // Open = previous day's close
+    const open = previousClose;
+
+    // Close with realistic ±3% daily movement
+    const closeChange = open * (Math.random() * 0.06 - 0.03);
+    const close = Math.round((open + closeChange) / 100) * 100;
+
+    // High and Low with realistic wicks
+    const high = Math.round(Math.max(open, close) * (1 + Math.random() * 0.02) / 100) * 100;
+    const low = Math.round(Math.min(open, close) * (1 - Math.random() * 0.02) / 100) * 100;
+
+    // Volume between 100K and 5M
+    const volume = Math.floor(Math.random() * 4900000 + 100000);
+
+    data.push({
+      time: timeStr,
+      open,
+      high,
+      low,
+      close,
+      volume,
+    });
+
+    previousClose = close;
+  }
+
   return data;
 };
