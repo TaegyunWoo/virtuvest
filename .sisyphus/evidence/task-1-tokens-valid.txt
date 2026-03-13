@@ -1,0 +1,50 @@
+# CSS Design Tokens Validation - Task 1
+
+## File Modified: FE/src/index.css
+
+### ✅ NEW TOKENS ADDED INSIDE @theme BLOCK (lines 3-30)
+
+**Gradient Tokens:**
+- Line 16: --gradient-sidebar: linear-gradient(to bottom, #1E293B, #0F172A);
+- Line 17: --gradient-card-stat: linear-gradient(135deg, #E0E7FF, #F8FAFC);
+
+**Shadow Tokens:**
+- Line 19: --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+- Line 20: --shadow-card-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+- Line 21: --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+
+**Sidebar Tokens:**
+- Line 23: --color-sidebar-bg: #1E293B;
+- Line 24: --color-sidebar-text: #F1F5F9;
+- Line 25: --color-sidebar-active: #3B82F6;
+
+**Animation Timing Tokens:**
+- Line 27: --duration-fast: 150ms;
+- Line 28: --duration-normal: 200ms;
+- Line 29: --duration-slow: 300ms;
+
+### ✅ EXISTING TOKENS PRESERVED (8 tokens unchanged)
+- Lines 4-5: Font tokens (--font-sans, --font-mono)
+- Lines 7-14: Color tokens (primary, success, danger, background, surface, text-primary, text-secondary, border)
+
+### ✅ @KEYFRAMES DEFINED OUTSIDE @theme BLOCK (lines 43-90)
+- Line 43: @keyframes fadeIn
+- Line 52: @keyframes slideIn
+- Line 63: @keyframes countUp
+- Line 72: @keyframes skeleton-pulse
+- Line 81: @keyframes ripple
+
+All @keyframes are at root level (non-indented), complying with Tailwind CSS v4 requirements.
+
+### ✅ ANIMATION UTILITY CLASSES CREATED (lines 92-101)
+- Line 92: .animate-fade-in (uses fadeIn keyframe, var(--duration-normal))
+- Line 96: .animate-slide-in (uses slideIn keyframe, var(--duration-normal))
+- Line 100: .animate-skeleton (uses skeleton-pulse keyframe, 2s infinite)
+
+## Verification Summary
+✅ 14 new tokens added to @theme block
+✅ 8 existing tokens preserved
+✅ 5 @keyframes definitions at root level
+✅ 3 animation utility classes
+✅ No @keyframes inside @theme block (Tailwind v4 compliant)
+✅ CSS syntax is valid

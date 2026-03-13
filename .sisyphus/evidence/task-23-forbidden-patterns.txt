@@ -1,0 +1,14 @@
+=== Checking for alert() calls in src/ ===
+       0
+
+=== Checking for framer-motion imports in src/ ===
+       0
+
+=== Checking for framer-motion in package.json ===
+       0
+
+=== Checking for 'as any' in src/ ===
+       0
+
+=== Checking for @ts-ignore in src/ ===
+       0

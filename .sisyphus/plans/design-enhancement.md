@@ -1937,7 +1937,7 @@ Max Concurrent: 7 (Wave 2)
   - Files: `src/layouts/DashboardLayout.tsx, src/layouts/AuthLayout.tsx`
   - Pre-commit: `npm run build`
 
-- [ ] 23. Final Build Verification + Screenshot All Pages
+- [x] 23. Final Build Verification + Screenshot All Pages
 
   **What to do**:
   - Run comprehensive build and visual verification:
@@ -2042,19 +2042,19 @@ Max Concurrent: 7 (Wave 2)
 
 > 4 review agents run in PARALLEL. ALL must APPROVE. Rejection → fix → re-run.
 
-- [ ] F1. **Plan Compliance Audit** — `oracle`
+- [x] F1. **Plan Compliance Audit** — `oracle`
   Read the plan end-to-end. For each "Must Have": verify implementation exists (read file, curl endpoint, run command). For each "Must NOT Have": search codebase for forbidden patterns (framer-motion imports, dark mode classes, template/ changes). Check evidence files exist in .sisyphus/evidence/. Compare deliverables against plan.
   Output: `Must Have [N/N] | Must NOT Have [N/N] | Tasks [N/N] | VERDICT: APPROVE/REJECT`
 
-- [ ] F2. **Code Quality Review** — `unspecified-high`
+- [x] F2. **Code Quality Review** — `unspecified-high`
   Run `npm run build` (tsc -b && vite build). Review all changed files for: `as any`/`@ts-ignore`, empty catches, console.log in prod, commented-out code, unused imports. Check AI slop: excessive comments, over-abstraction, generic names. Verify no `alert()` calls remain in codebase.
   Output: `Build [PASS/FAIL] | Lint [N clean/N issues] | Alert Calls [0] | VERDICT`
 
-- [ ] F3. **Real Manual QA** — `unspecified-high` (+ `playwright` skill)
+- [x] F3. **Real Manual QA** — `unspecified-high` (+ `playwright` skill)
   Start dev server. Navigate ALL 7 pages via Playwright. For each page: verify visual changes match requirements, test hover effects, check animations fire, verify loading/empty states toggle, test toast notifications trigger correctly, verify candlestick chart renders OHLC data with Korean colors, verify pie chart shows portfolio composition. Save screenshots to `.sisyphus/evidence/final-qa/`.
   Output: `Pages [7/7 pass] | Animations [N/N] | Charts [2/2] | Toasts [N/N] | VERDICT`
 
-- [ ] F4. **Scope Fidelity Check** — `deep`
+- [x] F4. **Scope Fidelity Check** — `deep`
   For each task: read "What to do", read actual diff. Verify 1:1 — everything in spec was built, nothing beyond spec. Check "Must NOT Have" compliance (no framer-motion, no dark mode, no onboarding, no avatar, no template/ changes, no new routes). Detect unaccounted file changes.
   Output: `Tasks [N/N compliant] | Guardrails [N/N] | Unaccounted [CLEAN/N] | VERDICT`
 
