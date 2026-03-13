@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Badge } from '@/components/ui/Badge';
-import { mockStocks, generateChartData, accountInfo } from '@/data/mockData';
+import { mockStocks, generateOHLCData, accountInfo } from '@/data/mockData';
 import { formatCurrency, formatPercent, cn } from '@/lib/utils';
+import { CandlestickChart } from '@/components/charts/CandlestickChart';
+import { toast } from 'sonner';
+import { SkeletonChart } from '@/components/ui/Skeleton';
 
 export function StockDetailPage() {
   const { code } = useParams<{ code: string }>();
@@ -15,6 +17,12 @@ export function StockDetailPage() {
   const stock = mockStocks.find(s => s.code === code);
   const [tradeType, setTradeType] = useState<'buy' | 'sell'>('buy');
   const [quantity, setQuantity] = useState<string>('');
+  const [isChartLoading, setIsChartLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsChartLoading(false), 500);
+    return () => clearTimeout(timer);
+  }, []);
 
   if (!stock) {
     return (
@@ -25,7 +33,7 @@ export function StockDetailPage() {
     );
   }
 
-  const chartData = generateChartData(stock.currentPrice);
+  const ohlcData = generateOHLCData(stock.currentPrice);
   const isPositive = stock.changeRate >= 0;
   const colorClass = isPositive ? 'text-[var(--color-danger)]' : 'text-[var(--color-primary)]';
   const qty = parseInt(quantity, 10) || 0;
@@ -34,14 +42,25 @@ export function StockDetailPage() {
 
   const handleTrade = () => {
     if (qty <= 0) {
-      alert('수량을 입력해주세요.');
+      toast.error('수량을 입력해주세요.');
       return;
     }
-    if (tradeType === 'buy' && !hasEnoughBalance) {
-      alert('잔고가 부족합니다.');
-      return;
+    
+    if (tradeType === 'buy') {
+      if (!hasEnoughBalance) {
+        toast.error('잔고가 부족합니다.');
+        return;
+      }
+      toast.success('매수 주문이 실행되었습니다.');
+    } else {
+      const hasHoldings = false;
+      if (!hasHoldings) {
+        toast.error('보유하지 않은 종목은 매도할 수 없습니다.');
+        return;
+      }
+      toast.success('매도 주문이 실행되었습니다.');
     }
-    alert(`${stock.name} ${qty}주 ${tradeType === 'buy' ? '매수' : '매도'} 주문이 완료되었습니다.`);
+    
     setQuantity('');
   };
 
@@ -70,39 +89,12 @@ export function StockDetailPage() {
                 </div>
               </div>
 
-              <div className="h-[300px] w-full mt-8">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={chartData}>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--color-border)" />
-                    <XAxis 
-                      dataKey="date" 
-                      axisLine={false}
-                      tickLine={false}
-                      tick={{ fill: 'var(--color-text-secondary)', fontSize: 12 }}
-                      dy={10}
-                    />
-                    <YAxis 
-                      domain={['auto', 'auto']} 
-                      axisLine={false}
-                      tickLine={false}
-                      tick={{ fill: 'var(--color-text-secondary)', fontSize: 12 }}
-                      tickFormatter={(value) => value.toLocaleString()}
-                      dx={-10}
-                    />
-                    <Tooltip 
-                      formatter={(value: number) => [`₩${value.toLocaleString()}`, '가격']}
-                      labelFormatter={(label) => `${label}일`}
-                    />
-                    <Line 
-                      type="monotone" 
-                      dataKey="price" 
-                      stroke={isPositive ? 'var(--color-danger)' : 'var(--color-primary)'} 
-                      strokeWidth={2}
-                      dot={false}
-                      activeDot={{ r: 4 }}
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
+              <div className="h-[400px] w-full mt-8">
+                {isChartLoading ? (
+                  <SkeletonChart />
+                ) : (
+                  <CandlestickChart data={ohlcData} height={400} />
+                )}
               </div>
             </CardContent>
           </Card>

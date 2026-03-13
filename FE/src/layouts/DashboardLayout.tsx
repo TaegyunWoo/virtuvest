@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, Search, PieChart, History, Menu, X, LogOut, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Logo } from '@/components/ui/Logo';
 import { user } from '@/data/mockData';
 
 const navItems = [
@@ -22,7 +23,7 @@ export function DashboardLayout() {
   return (
     <div className="min-h-screen bg-[var(--color-background)] flex flex-col md:flex-row">
       <div className="md:hidden flex items-center justify-between p-4 bg-[var(--color-surface)] border-b border-[var(--color-border)] z-20">
-        <h1 className="text-xl font-bold text-[var(--color-primary)]">VirtuVest</h1>
+        <Logo size="sm" />
         <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="p-2">
           {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -30,12 +31,12 @@ export function DashboardLayout() {
 
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-10 w-64 bg-[var(--color-surface)] border-r border-[var(--color-border)] transform transition-transform duration-200 ease-in-out md:relative md:translate-x-0",
+          "fixed inset-y-0 left-0 z-10 w-64 bg-gradient-to-b from-[#1E293B] to-[#0F172A] transform transition-transform duration-200 ease-in-out md:relative md:translate-x-0",
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
-        <div className="hidden md:flex p-6 items-center border-b border-[var(--color-border)]">
-          <h1 className="text-2xl font-bold text-[var(--color-primary)]">VirtuVest</h1>
+        <div className="hidden md:flex p-6 items-center border-b border-white/10">
+          <Logo size="md" />
         </div>
 
         <div className="p-4 flex flex-col gap-2 mt-16 md:mt-0">
@@ -48,8 +49,8 @@ export function DashboardLayout() {
                 cn(
                   "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors",
                   isActive 
-                    ? "bg-[var(--color-primary)] text-white" 
-                    : "text-[var(--color-text-secondary)] hover:bg-slate-100 hover:text-[var(--color-text-primary)]"
+                    ? "bg-white/15 text-white" 
+                    : "text-slate-400 hover:bg-white/10 hover:text-white"
                 )
               }
             >

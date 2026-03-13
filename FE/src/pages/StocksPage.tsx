@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/Card';
@@ -7,11 +7,19 @@ import { Input } from '@/components/ui/Input';
 import { Badge } from '@/components/ui/Badge';
 import { mockStocks } from '@/data/mockData';
 import { formatCurrency, formatPercent, cn } from '@/lib/utils';
+import { EmptyState } from '@/components/ui/EmptyState';
+import { SkeletonTable } from '@/components/ui/Skeleton';
 
 export function StocksPage() {
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState<'ALL' | 'KOSPI' | 'KOSDAQ'>('ALL');
+  const [isTableLoading, setIsTableLoading] = useState(true);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsTableLoading(false), 500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const filteredStocks = mockStocks.filter(stock => {
     const matchesSearch = stock.name.includes(search) || stock.code.includes(search);
@@ -54,54 +62,58 @@ export function StocksPage() {
 
       <Card>
         <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>종목명/코드</TableHead>
-                <TableHead className="text-right">현재가</TableHead>
-                <TableHead className="text-right">전일대비</TableHead>
-                <TableHead className="text-right">등락률</TableHead>
-                <TableHead className="text-right hidden md:table-cell">거래량</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredStocks.map((stock) => (
-                <TableRow 
-                  key={stock.code}
-                  className="cursor-pointer hover:bg-slate-50"
-                  onClick={() => navigate(`/stocks/${stock.code}`)}
-                >
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      <span className="font-medium">{stock.name}</span>
-                      <Badge variant="outline">{stock.market}</Badge>
-                    </div>
-                    <div className="text-xs text-[var(--color-text-secondary)] font-mono-num">{stock.code}</div>
-                  </TableCell>
-                  <TableCell className="text-right font-mono-num font-medium">
-                    {formatCurrency(stock.currentPrice)}
-                  </TableCell>
-                  <TableCell className={cn("text-right font-mono-num", stock.change > 0 ? "text-[var(--color-danger)]" : stock.change < 0 ? "text-[var(--color-primary)]" : "")}>
-                    {stock.change > 0 ? '▲ ' : stock.change < 0 ? '▼ ' : ''}
-                    {formatCurrency(Math.abs(stock.change))}
-                  </TableCell>
-                  <TableCell className={cn("text-right font-mono-num font-medium", stock.changeRate > 0 ? "text-[var(--color-danger)]" : stock.changeRate < 0 ? "text-[var(--color-primary)]" : "")}>
-                    {formatPercent(stock.changeRate)}
-                  </TableCell>
-                  <TableCell className="text-right font-mono-num text-[var(--color-text-secondary)] hidden md:table-cell">
-                    {stock.volume.toLocaleString()}
-                  </TableCell>
-                </TableRow>
-              ))}
-              {filteredStocks.length === 0 && (
+          {isTableLoading ? (
+            <SkeletonTable />
+          ) : (
+            <Table>
+              <TableHeader>
                 <TableRow>
-                  <TableCell colSpan={5} className="h-32 text-center text-[var(--color-text-secondary)]">
-                    검색 결과가 없습니다.
-                  </TableCell>
+                  <TableHead>종목명/코드</TableHead>
+                  <TableHead className="text-right">현재가</TableHead>
+                  <TableHead className="text-right">전일대비</TableHead>
+                  <TableHead className="text-right">등락률</TableHead>
+                  <TableHead className="text-right hidden md:table-cell">거래량</TableHead>
                 </TableRow>
-              )}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {filteredStocks.map((stock) => (
+                  <TableRow 
+                    key={stock.code}
+                    className="cursor-pointer hover:bg-slate-50"
+                    onClick={() => navigate(`/stocks/${stock.code}`)}
+                  >
+                    <TableCell>
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium">{stock.name}</span>
+                        <Badge variant="outline">{stock.market}</Badge>
+                      </div>
+                      <div className="text-xs text-[var(--color-text-secondary)] font-mono-num">{stock.code}</div>
+                    </TableCell>
+                    <TableCell className="text-right font-mono-num font-medium">
+                      {formatCurrency(stock.currentPrice)}
+                    </TableCell>
+                    <TableCell className={cn("text-right font-mono-num", stock.change > 0 ? "text-[var(--color-danger)]" : stock.change < 0 ? "text-[var(--color-primary)]" : "")}>
+                      {stock.change > 0 ? '▲ ' : stock.change < 0 ? '▼ ' : ''}
+                      {formatCurrency(Math.abs(stock.change))}
+                    </TableCell>
+                    <TableCell className={cn("text-right font-mono-num font-medium", stock.changeRate > 0 ? "text-[var(--color-danger)]" : stock.changeRate < 0 ? "text-[var(--color-primary)]" : "")}>
+                      {formatPercent(stock.changeRate)}
+                    </TableCell>
+                    <TableCell className="text-right font-mono-num text-[var(--color-text-secondary)] hidden md:table-cell">
+                      {stock.volume.toLocaleString()}
+                    </TableCell>
+                  </TableRow>
+                ))}
+                {filteredStocks.length === 0 && (
+                  <TableRow>
+                    <TableCell colSpan={5} className="py-8">
+                      <EmptyState icon={Search} title="검색 결과가 없습니다" description="다른 키워드로 검색해보세요" />
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          )}
         </CardContent>
       </Card>
     </div>

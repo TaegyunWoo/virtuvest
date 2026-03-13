@@ -1,13 +1,31 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/Table';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { mockHoldings, goal } from '@/data/mockData';
 import { formatCurrency, formatPercent, cn } from '@/lib/utils';
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { toast } from 'sonner';
+import { EmptyState } from '@/components/ui/EmptyState';
+import { PackageOpen } from 'lucide-react';
+import { SkeletonChart } from '@/components/ui/Skeleton';
 
 export function PortfolioPage() {
   const [targetGoal, setTargetGoal] = useState((goal.target / 10000).toString());
+  const [isPieLoading, setIsPieLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsPieLoading(false), 500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const pieColors = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899'];
+  const pieData = mockHoldings.map((holding, idx) => ({
+    name: holding.name,
+    value: holding.totalValue,
+    color: pieColors[idx % pieColors.length]
+  }));
   
   const totalInvestment = mockHoldings.reduce((acc, holding) => acc + (holding.averagePrice * holding.quantity), 0);
   const totalValue = mockHoldings.reduce((acc, holding) => acc + holding.totalValue, 0);
@@ -15,7 +33,7 @@ export function PortfolioPage() {
   const totalReturnRate = totalInvestment > 0 ? (totalReturnAmount / totalInvestment) * 100 : 0;
   
   const handleSetGoal = () => {
-    alert(`목표 수익액이 ${formatCurrency(parseInt(targetGoal) * 10000)}으로 설정되었습니다.`);
+    toast.success(`목표 수익액이 ${formatCurrency(parseInt(targetGoal) * 10000)}으로 설정되었습니다.`);
   };
 
   const currentReturnProgress = Math.max(0, Math.min(100, (goal.current / goal.target) * 100));
@@ -25,7 +43,7 @@ export function PortfolioPage() {
       <h2 className="text-2xl font-bold text-[var(--color-text-primary)]">포트폴리오</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card>
+        <Card variant="stat">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm text-[var(--color-text-secondary)]">총 평가금액</CardTitle>
           </CardHeader>
@@ -33,7 +51,7 @@ export function PortfolioPage() {
             <div className="text-2xl font-bold font-mono-num">{formatCurrency(totalValue)}</div>
           </CardContent>
         </Card>
-        <Card>
+        <Card variant="stat">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm text-[var(--color-text-secondary)]">총 투자금액</CardTitle>
           </CardHeader>
@@ -41,7 +59,7 @@ export function PortfolioPage() {
             <div className="text-2xl font-bold font-mono-num">{formatCurrency(totalInvestment)}</div>
           </CardContent>
         </Card>
-        <Card>
+        <Card variant="stat">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm text-[var(--color-text-secondary)]">총 수익/손실</CardTitle>
           </CardHeader>
@@ -51,7 +69,7 @@ export function PortfolioPage() {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card variant="stat">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm text-[var(--color-text-secondary)]">총 수익률</CardTitle>
           </CardHeader>
@@ -105,8 +123,8 @@ export function PortfolioPage() {
                   ))}
                   {mockHoldings.length === 0 && (
                     <TableRow>
-                      <TableCell colSpan={6} className="h-32 text-center text-[var(--color-text-secondary)]">
-                        보유 종목이 없습니다.
+                      <TableCell colSpan={6} className="h-32">
+                        <EmptyState icon={PackageOpen} title="보유 종목이 없습니다" description="종목을 검색하고 매수해보세요" />
                       </TableCell>
                     </TableRow>
                   )}
@@ -116,7 +134,38 @@ export function PortfolioPage() {
           </Card>
         </div>
 
-        <div className="lg:col-span-1">
+        <div className="lg:col-span-1 space-y-6">
+          <Card variant="stat">
+            <CardHeader>
+              <CardTitle>포트폴리오 구성</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {isPieLoading ? (
+                <SkeletonChart />
+              ) : (
+                <ResponsiveContainer width="100%" height={250}>
+                  <PieChart>
+                    <Pie
+                      data={pieData}
+                      dataKey="value"
+                      nameKey="name"
+                      cx="50%"
+                      cy="50%"
+                      outerRadius={80}
+                      innerRadius={50}
+                    >
+                      {pieData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                    <Tooltip formatter={(value: number) => `₩${value.toLocaleString('ko-KR')}`} />
+                    <Legend />
+                  </PieChart>
+                </ResponsiveContainer>
+              )}
+            </CardContent>
+          </Card>
+
           <Card>
             <CardHeader>
               <CardTitle>목표 수익 설정</CardTitle>

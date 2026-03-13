@@ -1245,7 +1245,7 @@ Max Concurrent: 7 (Wave 2)
   - Files: `src/components/ui/Input.tsx, src/components/ui/Badge.tsx`
   - Pre-commit: `npm run build`
 
-- [ ] 15. DashboardLayout — Dark Gradient Sidebar + Logo Integration
+- [x] 15. DashboardLayout — Dark Gradient Sidebar + Logo Integration
 
   **What to do**:
   - Modify `FE/src/layouts/DashboardLayout.tsx` to:
@@ -1329,7 +1329,7 @@ Max Concurrent: 7 (Wave 2)
   - Files: `src/layouts/DashboardLayout.tsx`
   - Pre-commit: `npm run build`
 
-- [ ] 16. AuthLayout — Logo Integration
+- [x] 16. AuthLayout — Logo Integration
 
   **What to do**:
   - Modify `FE/src/layouts/AuthLayout.tsx` to:
@@ -1396,7 +1396,7 @@ Max Concurrent: 7 (Wave 2)
   - Files: `src/layouts/AuthLayout.tsx`
   - Pre-commit: `npm run build`
 
-- [ ] 17. StockDetailPage — Candlestick Chart + Toast Notifications
+- [x] 17. StockDetailPage — Candlestick Chart + Toast Notifications
 
   **What to do**:
   - Modify `FE/src/pages/StockDetailPage.tsx` to:
@@ -1500,7 +1500,7 @@ Max Concurrent: 7 (Wave 2)
   - Files: `src/pages/StockDetailPage.tsx`
   - Pre-commit: `npm run build`
 
-- [ ] 18. PortfolioPage — Pie Chart + Toast + Empty State + Gradient Cards
+- [x] 18. PortfolioPage — Pie Chart + Toast + Empty State + Gradient Cards
 
   **What to do**:
   - Modify `FE/src/pages/PortfolioPage.tsx` to:
@@ -1612,7 +1612,7 @@ Max Concurrent: 7 (Wave 2)
   - Files: `src/pages/PortfolioPage.tsx`
   - Pre-commit: `npm run build`
 
-- [ ] 19. DashboardPage — Animated Numbers + Gradient Stat Cards
+- [x] 19. DashboardPage — Animated Numbers + Gradient Stat Cards
 
   **What to do**:
   - Modify `FE/src/pages/DashboardPage.tsx` to:
@@ -1698,7 +1698,7 @@ Max Concurrent: 7 (Wave 2)
   - Files: `src/pages/DashboardPage.tsx`
   - Pre-commit: `npm run build`
 
-- [ ] 20. StocksPage + TransactionsPage — Empty States + Table Enhancements
+- [x] 20. StocksPage + TransactionsPage — Empty States + Table Enhancements
 
   **What to do**:
   - Modify `FE/src/pages/StocksPage.tsx`:
@@ -1785,7 +1785,7 @@ Max Concurrent: 7 (Wave 2)
   - Files: `src/pages/StocksPage.tsx, src/pages/TransactionsPage.tsx`
   - Pre-commit: `npm run build`
 
-- [ ] 21. SignupPage — Toast (Replace alert)
+- [x] 21. SignupPage — Toast (Replace alert)
 
   **What to do**:
   - Modify `FE/src/pages/SignupPage.tsx` to:

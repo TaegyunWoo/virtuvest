@@ -1,9 +1,19 @@
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/Table';
+import { AnimatedNumber } from '@/components/ui/AnimatedNumber';
+import { SkeletonStatCard } from '@/components/ui/Skeleton';
 import { accountInfo, mockHoldings, goal } from '@/data/mockData';
 import { formatCurrency, formatPercent, cn } from '@/lib/utils';
 
 export function DashboardPage() {
+  const [isLoading, setIsLoading] = useState(true);
+  
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 500);
+    return () => clearTimeout(timer);
+  }, []);
+
   const totalAssets = accountInfo.balance + mockHoldings.reduce((acc, holding) => acc + holding.totalValue, 0);
   const totalInvestment = mockHoldings.reduce((acc, holding) => acc + (holding.averagePrice * holding.quantity), 0);
   const totalReturnRate = ((totalAssets - accountInfo.initialBalance) / accountInfo.initialBalance) * 100;
@@ -15,40 +25,53 @@ export function DashboardPage() {
       <h2 className="text-2xl font-bold text-[var(--color-text-primary)]">대시보드</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm text-[var(--color-text-secondary)]">총 자산</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold font-mono-num">{formatCurrency(totalAssets)}</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm text-[var(--color-text-secondary)]">총 수익률</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className={cn("text-2xl font-bold font-mono-num", totalReturnRate >= 0 ? "text-[var(--color-danger)]" : "text-[var(--color-primary)]")}>
-              {formatPercent(totalReturnRate)}
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm text-[var(--color-text-secondary)]">현금 잔고</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold font-mono-num">{formatCurrency(accountInfo.balance)}</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm text-[var(--color-text-secondary)]">투자 금액</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold font-mono-num">{formatCurrency(totalInvestment)}</div>
-          </CardContent>
-        </Card>
+        {isLoading ? (
+          <>
+            <SkeletonStatCard />
+            <SkeletonStatCard />
+            <SkeletonStatCard />
+            <SkeletonStatCard />
+          </>
+        ) : (
+          <>
+            <Card variant="stat">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm text-[var(--color-text-secondary)]">총 자산</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <AnimatedNumber value={totalAssets} prefix="₩" className="text-2xl font-bold font-mono-num" />
+              </CardContent>
+            </Card>
+            <Card variant="stat">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm text-[var(--color-text-secondary)]">총 수익률</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <AnimatedNumber 
+                  value={totalReturnRate} 
+                  suffix="%" 
+                  className={cn("text-2xl font-bold font-mono-num", totalReturnRate >= 0 ? "text-[var(--color-danger)]" : "text-[var(--color-primary)]")} 
+                />
+              </CardContent>
+            </Card>
+            <Card variant="stat">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm text-[var(--color-text-secondary)]">현금 잔고</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <AnimatedNumber value={accountInfo.balance} prefix="₩" className="text-2xl font-bold font-mono-num" />
+              </CardContent>
+            </Card>
+            <Card variant="stat">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm text-[var(--color-text-secondary)]">투자 금액</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <AnimatedNumber value={totalInvestment} prefix="₩" className="text-2xl font-bold font-mono-num" />
+              </CardContent>
+            </Card>
+          </>
+        )}
       </div>
 
       <Card>
