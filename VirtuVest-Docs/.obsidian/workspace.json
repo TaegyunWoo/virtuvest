@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "서비스 기획/개발 계획/MVP/MVP 기획안.md",
+                "file": "서비스 기획/개발 계획/MVP/UI_SPEC.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "MVP 기획안"
+              "title": "UI_SPEC"
             }
           }
         ]
@@ -183,10 +183,20 @@
       "bases:새 베이스 생성하기": false
     }
   },
-  "active": "587c9be8eb75ec3c",
+  "active": "1b104815e8cfda49",
   "lastOpenFiles": [
-    "서비스 기획/개발 계획/MVP/작업 계획 Todo List.md",
     "서비스 기획/개발 계획/MVP/MVP 기획안.md",
+    "서비스 기획/개발 계획/MVP/UI_SPEC.md",
+    "서비스 기획/개발 계획/MVP/screenshots/transactions.png",
+    "서비스 기획/개발 계획/MVP/screenshots/stocks_search.png",
+    "서비스 기획/개발 계획/MVP/screenshots/stock_detail.png",
+    "서비스 기획/개발 계획/MVP/screenshots/signup.png",
+    "서비스 기획/개발 계획/MVP/screenshots/portfolio.png",
+    "서비스 기획/개발 계획/MVP/screenshots/login.png",
+    "서비스 기획/개발 계획/MVP/screenshots/dashboard.png",
+    "서비스 기획/개발 계획/MVP/screenshots",
+    "docs",
+    "서비스 기획/개발 계획/MVP/작업 계획 Todo List.md",
     "서비스 기획/개발 계획/MVP",
     "서비스 기획/주식 데이터 관리/주식 데이터 수집 계획.md",
     "서비스 기획/개발 계획/Untitled.md",

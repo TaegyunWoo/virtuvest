@@ -16,6 +16,10 @@ export const CandlestickChart = ({ data, height = 300, className }: CandlestickC
   const chartRef = useRef<IChartApi | null>(null);
   const [selectedPeriod, setSelectedPeriod] = useState<Period>('1개월');
 
+  const chartTextColor = '#64748B';
+  const chartGridColor = 'rgba(148, 163, 184, 0.16)';
+  const chartBorderColor = '#E2E8F0';
+
   const periods: Period[] = ['1일', '1주', '1개월', '3개월'];
 
   const getFilteredData = (): OHLCData[] => {
@@ -47,24 +51,24 @@ export const CandlestickChart = ({ data, height = 300, className }: CandlestickC
       height: height,
       layout: {
         background: { color: 'transparent' },
-        textColor: 'var(--color-text-secondary)',
+        textColor: chartTextColor,
       },
       grid: {
         vertLines: {
-          color: 'var(--color-border)',
+          color: chartGridColor,
         },
         horzLines: {
-          color: 'var(--color-border)',
+          color: chartGridColor,
         },
       },
       crosshair: {
         mode: 1,
       },
       rightPriceScale: {
-        borderColor: 'var(--color-border)',
+        borderColor: chartBorderColor,
       },
       timeScale: {
-        borderColor: 'var(--color-border)',
+        borderColor: chartBorderColor,
         timeVisible: false,
       },
     });
