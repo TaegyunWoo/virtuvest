@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  --font-mono: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  
+  --color-primary: #3B82F6;
+  --color-success: #10B981;
+  --color-danger: #EF4444;
+  --color-background: #F8FAFC;
+  --color-surface: #FFFFFF;
+  --color-text-primary: #1E293B;
+  --color-text-secondary: #64748B;
+  --color-border: #E2E8F0;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+  }
+}
+
+.font-mono-num {
+  font-family: var(--font-mono);
+}
