@@ -8,7 +8,7 @@ import { formatCurrency, formatPercent, cn } from '@/lib/utils';
 
 export function DashboardPage() {
   const [isLoading, setIsLoading] = useState(true);
-  
+
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 500);
     return () => clearTimeout(timer);
@@ -17,7 +17,7 @@ export function DashboardPage() {
   const totalAssets = accountInfo.balance + mockHoldings.reduce((acc, holding) => acc + holding.totalValue, 0);
   const totalInvestment = mockHoldings.reduce((acc, holding) => acc + (holding.averagePrice * holding.quantity), 0);
   const totalReturnRate = ((totalAssets - accountInfo.initialBalance) / accountInfo.initialBalance) * 100;
-  
+
   const progressPercent = Math.min(100, Math.max(0, (goal.current / goal.target) * 100));
 
   return (
@@ -47,10 +47,10 @@ export function DashboardPage() {
                 <CardTitle className="text-sm text-[var(--color-text-secondary)]">총 수익률</CardTitle>
               </CardHeader>
               <CardContent>
-                <AnimatedNumber 
-                  value={totalReturnRate} 
-                  suffix="%" 
-                  className={cn("text-2xl font-bold font-mono-num", totalReturnRate >= 0 ? "text-[var(--color-danger)]" : "text-[var(--color-primary)]")} 
+                <AnimatedNumber
+                  value={totalReturnRate}
+                  suffix="%"
+                  className={cn("text-2xl font-bold font-mono-num", totalReturnRate >= 0 ? "text-[var(--color-danger)]" : "text-[var(--color-primary)]")}
                 />
               </CardContent>
             </Card>
@@ -64,7 +64,7 @@ export function DashboardPage() {
             </Card>
             <Card variant="stat">
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm text-[var(--color-text-secondary)]">투자 금액</CardTitle>
+                <CardTitle className="text-sm text-[var(--color-text-secondary)]">투자 금액 (평가금액)</CardTitle>
               </CardHeader>
               <CardContent>
                 <AnimatedNumber value={totalInvestment} prefix="₩" className="text-2xl font-bold font-mono-num" />
@@ -85,7 +85,7 @@ export function DashboardPage() {
               <span className="font-medium">목표 {formatCurrency(goal.target)}</span>
             </div>
             <div className="h-4 w-full bg-slate-100 rounded-full overflow-hidden">
-              <div 
+              <div
                 className="h-full bg-[var(--color-primary)] transition-all duration-500"
                 style={{ width: `${progressPercent}%` }}
               />
