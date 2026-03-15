@@ -18,6 +18,7 @@ yarn-error.log*
 
 # Agent Settings
 .omc/
+.sisyphus/
 .geminiignore
 .aicommit
 
