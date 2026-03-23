@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "서비스 기획/주식 데이터 관리/매칭 시스템 알고리즘 설계.md",
+                "file": "서비스 기획/주식 데이터 관리/시스템 알고리즘 설계.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "매칭 시스템 알고리즘 설계"
+              "title": "시스템 알고리즘 설계"
             }
           }
         ]
@@ -185,8 +185,10 @@
   },
   "active": "587c9be8eb75ec3c",
   "lastOpenFiles": [
+    "서비스 기획/주식 데이터 관리/주식 데이터 수집 계획.md",
+    "무제.md",
+    "서비스 기획/주식 데이터 관리/시스템 알고리즘 설계.md",
     "서비스 기획/개발 계획/MVP/screenshots/stock_detail.png",
-    "서비스 기획/주식 데이터 관리/매칭 시스템 알고리즘 설계.md",
     "서비스 기획/개발 계획/MVP/screenshots/portfolio.png",
     "서비스 기획/개발 계획/MVP/screenshots/login.png",
     "서비스 기획/개발 계획/MVP/screenshots/dashboard.png",
@@ -202,7 +204,6 @@
     "서비스 기획/개발 계획/MVP/screenshots",
     "docs",
     "서비스 기획/개발 계획/MVP",
-    "서비스 기획/주식 데이터 관리/주식 데이터 수집 계획.md",
     "서비스 기획/개발 계획/Untitled.md",
     "서비스 기획/개발 계획",
     "서비스 기획/주식 데이터 관리/주식 데",
